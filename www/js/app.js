@@ -5,7 +5,12 @@ var $themeButtons = null;
 var $aspectRatioButtons = null;
 var $quote = null;
 var $fontSize = null;
-var $show = null;
+var $showInput = null;
+var $showCredit = null;
+var $timestamp = null;
+var $timestampInput = null;
+var $kicker = null;
+var $kickerInput = null;
 var $source = null;
 var $logoWrapper = null;
 
@@ -85,9 +90,11 @@ $(function() {
     $aspectRatioButtons = $('#aspect-ratio .btn');
     $fontSize = $('#fontsize');
     $showInput = $('#show');
-    $timestampInput = $('#timestamp');
     $showCredit = $('.show-credit');
+    $timestampInput = $('#timestamp');
     $timestamp = $('.timestamp');
+    $kicker = $('.kicker');
+    $kickerInput = $('#kicker');
     $quote = $('#quote');
     $logoWrapper = $('.logo-wrapper');
 
@@ -129,6 +136,11 @@ $(function() {
 
     $fontSize.on('change', function() {
         adjustFontSize($(this).val());
+    });
+
+    $kickerInput.on('keyup', function() {
+        var inputText = $(this).val();
+        $kicker.text(inputText);
     });
 
     $timestampInput.on('keyup', function() {
