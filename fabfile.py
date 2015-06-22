@@ -58,30 +58,16 @@ def app_config_js():
     with open('www/js/app_config.js', 'w') as f:
         f.write(js)
 
-def copy_js():
-    """
-    Render copy.js to file.
-    """
-    from app import _copy_js
-
-    response = _copy_js()
-    js = response[0]
-
-    with open('www/js/copy.js', 'w') as f:
-        f.write(js)
-
 def render():
     """
     Render HTML templates and compile assets.
     """
     from flask import g
 
-    update_copy()
     less()
     jst()
 
     app_config_js()
-    copy_js()
 
     compiled_includes = []
 
