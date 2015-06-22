@@ -7,39 +7,7 @@ var $quote = null;
 var $fontSize = null;
 var $show = null;
 var $source = null;
-var $quote = null;
 var $logoWrapper = null;
-
-var quotes = [
-    {
-        "quote": "I'd been drinking.",
-        "source": "Dennis Rodman"
-    },
-    {
-        "quote": "I've made a huge mistake.",
-        "source": "G.O.B."
-    },
-    {
-        "quote": "Yes, I have smoked crack cocaine",
-        "source": "Toronto Mayor Rob Ford",
-        "size": 65
-    },
-    {
-        "quote": "Annyong.",
-        "source": "Annyong",
-        "size": 90
-    },
-    {
-        "quote": "STEVE HOLT!",
-        "source": "Steve Holt",
-        "size": 65
-    },
-    {
-        "quote": "Whoa, whoa, whoa. There's still plenty of meat on that bone. Now you take this home, throw it in a pot, add some broth, a potato. Baby, you've got a stew going.",
-        "source": "Carl Weathers",
-        "size": 40
-    }
-];
 
 
 // Change straight quotes to curly and double hyphens to em-dashes.
@@ -70,8 +38,8 @@ function processText() {
 
 function saveImage() {
     // first check if the quote actually fits
-    if (($source.offset().top + $source.height()) > $logoWrapper.offset().top) {
-        alert("Your quote doesn't quite fit. Shorten the text or choose a smaller font-size.");
+    if (($timestamp.offset().top + $timestamp.height()) > $logoWrapper.offset().top) {
+        alert("Your list doesn't fit. Shorten the text or choose a smaller font-size.");
         return;
     }
 
@@ -126,45 +94,46 @@ $(function() {
     $themeButtons = $('#theme .btn');
     $aspectRatioButtons = $('#aspect-ratio .btn');
     $fontSize = $('#fontsize');
-    $show = $('#show');
-    $source = $('.source');
+    $showInput = $('#show');
+    $timestampInput = $('#timestamp');
     $showCredit = $('.show-credit');
+    $timestamp = $('.timestamp');
     $quote = $('#quote');
     $logoWrapper = $('.logo-wrapper');
 
-    var quote = quotes[Math.floor(Math.random()*quotes.length)];
-    if (quote.size){
-        adjustFontSize(quote.size);
-    }
-    $('blockquote p').text(quote.quote);
-    $source.html('&mdash;&thinsp;' + quote.source);
+    adjustFontSize(32);
     processText();
+
+    $timestamp.text(moment().format('h:mm a zz') + ' EST')
+    $timestampInput.val(moment().format('h:mm a zz') + ' EST')
 
     $save.on('click', saveImage);
 
     $themeButtons.on('click', function() {
-        $themeButtons.removeClass().addClass('btn btn-default');
-        $(this).addClass('btn-primary');
+        $themeButtons.removeClass().addClass('btn btn-primary');
+        $(this).addClass('active');
         $poster.removeClass('poster-news poster-music poster-fresh-air poster-snap-judgement')
                     .addClass('poster-' + $(this).attr('id'));
     });
 
     $aspectRatioButtons.on('click', function() {
-        $aspectRatioButtons.removeClass().addClass('btn btn-default');
-        $(this).addClass('btn-primary');
+        $aspectRatioButtons.removeClass().addClass('btn btn-primary');
+        $(this).addClass('active');
         $poster.removeClass('square sixteen-by-nine').addClass($(this).attr('id'));
 
         if ($poster.hasClass('sixteen-by-nine')) {
-            adjustFontSize(32);
+            $fontSize.attr('min', 32);
             $fontSize.val(32);
+            adjustFontSize(32);
         } else {
-            adjustFontSize(90);
+            $fontSize.attr('min', 60);
             $fontSize.val(90);
+            adjustFontSize(90);
         }
     });
 
     $quote.on('click', function() {
-        $(this).find('button').toggleClass('btn-primary btn-default');
+        $(this).find('button').toggleClass('btn-primary active');
         $poster.toggleClass('quote');
     });
 
@@ -172,7 +141,12 @@ $(function() {
         adjustFontSize($(this).val());
     });
 
-    $show.on('keyup', function() {
+    $timestampInput.on('keyup', function() {
+        var inputText = $(this).val();
+        $timestamp.text(inputText);
+    });
+
+    $showInput.on('keyup', function() {
         var inputText = $(this).val();
         $showCredit.text(inputText);
     });
@@ -185,16 +159,10 @@ $(function() {
     // });
 
 
-    var quoteEl = document.querySelectorAll('.poster blockquote');
-    var sourceEl = document.querySelectorAll('.source');
+    var quoteEl = document.querySelectorAll('.poster ul');
 
     var quoteEditor = new MediumEditor(quoteEl, {
         disableToolbar: true,
         placeholder: 'Type your quote here'
-    });
-
-    var sourceEditor = new MediumEditor(sourceEl, {
-        disableToolbar: true,
-        placeholder: 'Type your quote source here'
     });
 });

@@ -10,19 +10,31 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <link rel="shortcut icon" href="http://media.npr.org/favicon.ico" />
 
-    <!-- Font loader -->
-    <script src="//ajax.googleapis.com/ajax/libs/webfont/1.4.10/webfont.js"></script>
+    <!-- Fonts -->
+    <script src="js/lib/webfont.js"></script>
     <script>
+        var urls = [
+            'http://s.npr.org/templates/css/fonts/GothamSSm.css',
+            'http://s.npr.org/templates/css/fonts/Gotham.css',
+            'http://s.npr.org/templates/css/fonts/Knockout.css'
+        ];
+
+        if (window.location.protocol == "https:") {
+            urls = [
+                'https://secure.npr.org/templates/css/fonts/GothamSSm.css',
+                'https://secure.npr.org/templates/css/fonts/Gotham.css',
+                'https://secure.npr.org/templates/css/fonts/Knockout.css'
+            ];
+        }
+
         WebFont.load({
              custom: {
                  families: [
                      'Gotham SSm:n4,n7',
-                     'Gotham:n4,n7'
+                     'Gotham:n4,n7',
+                     'Knockout 31 4r:n4'
                  ],
-                 urls: [
-                     'http://s.npr.org/templates/css/fonts/GothamSSm.css',
-                     'http://s.npr.org/templates/css/fonts/Gotham.css'
-                 ]
+                 urls: urls
              },
              timeout: 10000
         });
@@ -40,9 +52,9 @@
     <!-- JS -->
     {{ JS.push('js/lib/modernizr.js') }}
     {{ JS.push('js/app_config.js') }}
-    {{ JS.push('js/copy.js') }}
     {{ JS.push('js/console.js') }}
     {{ JS.push('js/lib/jquery-1.8.3.js') }}
+    {{ JS.push('js/lib/moment.js') }}
     {{ JS.push('js/lib/html5.js') }}
     {{ JS.push('js/responsive-ad.js') }}
     {% block extra_head_js %}{% endblock extra_head_js %}

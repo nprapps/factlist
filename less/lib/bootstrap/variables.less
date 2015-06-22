@@ -15,15 +15,6 @@
 @gray-light:             lighten(#000, 60%);   // #999
 @gray-lighter:           lighten(#000, 93.5%); // #eee
 
-// Brand colors
-// -------------------------
-
-@brand-primary:         #428bca;
-@brand-success:         #5cb85c;
-@brand-warning:         #f0ad4e;
-@brand-danger:          #d9534f;
-@brand-info:            #5bc0de;
-
 // NPR colors
 // -------------------------
 @inlineLink: #4774cc;
@@ -41,6 +32,15 @@
 @musicMedium: #e6ebf2;
 @musicLight: #dbe0e6;
 
+// Brand colors
+// -------------------------
+
+@brand-primary:         #4774cc;
+@brand-success:         #5cb85c;
+@brand-warning:         #f0ad4e;
+@brand-danger:          #d9534f;
+@brand-info:            #5bc0de;
+
 // Scaffolding
 // -------------------------
 
@@ -51,7 +51,7 @@
 // -------------------------
 
 @link-color:            @brand-primary;
-@link-hover-color:      darken(@link-color, 15%);
+@link-hover-color:      #bccae5;
 
 // Typography
 // -------------------------
@@ -59,6 +59,7 @@
 @font-family-sans-serif:  "Gotham SSm", "Helvetica Neue", Helvetica, Arial, sans-serif;
 @font-family-serif:       Georgia, "Times New Roman", Times, serif;
 @font-family-monospace:   Monaco, Menlo, Consolas, "Courier New", monospace;
+@font-family-condensed:   "Knockout 31 4r", Helvetica, Arial, sans-serif;
 @font-family-base:        @font-family-sans-serif;
 
 @font-size-base:          14px;
@@ -128,8 +129,8 @@
 @btn-default-border:             #ccc;
 
 @btn-primary-color:              #fff;
-@btn-primary-bg:                 @inlineLink;
-@btn-primary-border:             darken(@inlineLink, 5%);
+@btn-primary-bg:                 #6d8ac4;
+@btn-primary-border:             transparent; //darken(#6d8ac4, 5%);
 
 @btn-success-color:              #fff;
 @btn-success-bg:                 @brand-success;
