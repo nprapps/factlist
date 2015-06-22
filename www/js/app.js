@@ -125,9 +125,9 @@ $(function() {
             $fontSize.val(24);
             adjustFontSize(32);
         } else {
-            $fontSize.attr('min', 60);
-            $fontSize.val(90);
-            adjustFontSize(90);
+            $fontSize.attr('min', 32);
+            $fontSize.val(42);
+            adjustFontSize(42);
         }
     });
 
