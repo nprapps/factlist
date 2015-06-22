@@ -53,10 +53,10 @@ function saveImage() {
         window.oCanvas = window.oCanvas[0];
         var strDataURI = window.oCanvas.toDataURL();
 
-        var quote = $('blockquote').text().split(' ', 5);
+        var quote = $('blockquote p').first().text().split(' ', 5);
         var filename = convertToSlug(quote.join(' '));
 
-        var a = $("<a>").attr("href", strDataURI).attr("download", "quote-" + filename + ".png").appendTo("body");
+        var a = $("<a>").attr("href", strDataURI).attr("download", "factlist-" + filename + ".png").appendTo("body");
 
         a[0].click();
 
