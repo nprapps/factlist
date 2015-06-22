@@ -1,4 +1,4 @@
-quotable
+factlist
 ========================
 
 * [What is this?](#what-is-this)
@@ -19,7 +19,7 @@ quotable
 What is this?
 -------------
 
-Quotable is an app that lets you make sharable images out of quotations.
+factlist is an app that lets you make sharable images out of quotations.
 
 !["I've made a huge mistake"](examples/quote-ive-made-a-huge-mistake.png)
 
@@ -72,9 +72,9 @@ curl https://npmjs.org/install.sh | sh
 Then install the project requirements:
 
 ```
-cd quotable
+cd factlist
 npm install less universal-jst -g --prefix node_modules
-mkvirtualenv --no-site-packages quotable
+mkvirtualenv --no-site-packages factlist
 pip install -r requirements.txt
 fab update_copy
 ```
@@ -99,7 +99,7 @@ Run the project locally
 A flask app is used to run the project locally. It will automatically recompile templates and assets on demand.
 
 ```
-workon quotable
+workon factlist
 python app.py
 ```
 
@@ -175,7 +175,7 @@ Compile static assets
 Compile LESS to CSS, compile javascript templates to Javascript and minify all assets:
 
 ```
-workon quotable
+workon factlist
 fab render
 ```
 

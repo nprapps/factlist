@@ -14,19 +14,19 @@ import os
 NAMES
 """
 # Project name used for display
-PROJECT_NAME = 'quotable'
+PROJECT_NAME = 'factlist'
 
 # Project name in urls
 # Use dashes, not underscores!
-PROJECT_SLUG = 'quotable'
+PROJECT_SLUG = 'factlist'
 
 # The name of the repository containing the source
-REPOSITORY_NAME = 'quotable'
+REPOSITORY_NAME = 'factlist'
 REPOSITORY_URL = 'git@github.com:nprapps/%s.git' % REPOSITORY_NAME
 REPOSITORY_ALT_URL = None # 'git@bitbucket.org:nprapps/%s.git' % REPOSITORY_NAME'
 
 # The name to be used in paths on the server
-PROJECT_FILENAME = 'quotable'
+PROJECT_FILENAME = 'factlist'
 
 """
 DEPLOYMENT
@@ -82,4 +82,3 @@ NPR_DFP = {
 SERVICES
 """
 GOOGLE_ANALYTICS_ID = 'UA-5828686-4'
-
