@@ -361,36 +361,56 @@ header {
 	h2 {
 		text-transform: uppercase;
 		letter-spacing: 0.05em;
-		font-size: @font-size-large;
+		font-size: @font-size-base;
 		margin-top: 0;
 		margin-bottom: 1em;
 	}
 
-	ul:focus {
-		border: none;
-		outline: none;
-	}
-
-	p {
+	blockquote {
+		padding: 0 0 0 1em;
+		margin: 0 0 @line-height-computed * 2;
+		border-left: none;
 		font-size: inherit;
-		font-weight: inherit;
-		margin: 0;
-		line-height: 110%;
+		line-height: 100%;
+		font-weight: normal;
+		display: block;
+		overflow: visible;
 
-		span {
-			line-height: inherit !important;
+		&:focus {
+			border: none;
+			outline: none;
+		}
+
+		p {
+			font-size: inherit;
+			font-weight: inherit;
+			margin: 0;
+			line-height: 110%;
+			text-indent: -0.8em;
+			margin-left: -0.3em;
+			margin-bottom: 0.1em;
+
+
+			span {
+				line-height: inherit !important;
+			}
+
+			&:before {
+				content: "\2022";
+				margin-right: 0.2em;
+			}
+		}
+
+		&:last-child {
+			color: red;
+		}
+
+		.show-credit {
+			line-height: 1.2 !important;
 		}
 	}
 
-	ul {
-		padding-left: 0.8em;
-		margin-bottom: 0.5em;
-	}
 
-	ul li {
-		margin-bottom: 0.2em;
-
-	}
 
 	.show-credit {
 		line-height: 1.2 !important;

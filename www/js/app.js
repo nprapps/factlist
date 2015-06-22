@@ -43,17 +43,6 @@ function saveImage() {
         return;
     }
 
-    // don't print placeholder text if source is empty
-    if ($source.text() === '') {
-        alert("A source is required.");
-        return;
-    }
-
-    // make sure source begins with em dash
-    if (!$source.text().match(/^[\u2014]/g)) {
-        $source.html('&mdash;&thinsp;' + $source.text());
-    }
-
     $('canvas').remove();
     processText();
 
@@ -122,8 +111,8 @@ $(function() {
         $poster.removeClass('square sixteen-by-nine').addClass($(this).attr('id'));
 
         if ($poster.hasClass('sixteen-by-nine')) {
-            $fontSize.attr('min', 32);
-            $fontSize.val(32);
+            $fontSize.attr('min', 24);
+            $fontSize.val(24);
             adjustFontSize(32);
         } else {
             $fontSize.attr('min', 60);
@@ -159,7 +148,7 @@ $(function() {
     // });
 
 
-    var quoteEl = document.querySelectorAll('.poster ul');
+    var quoteEl = document.querySelectorAll('.poster blockquote');
 
     var quoteEditor = new MediumEditor(quoteEl, {
         disableToolbar: true,
