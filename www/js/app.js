@@ -47,6 +47,7 @@ function saveImage() {
     processText();
 
     html2canvas($poster, {
+      letterRendering: true,
       onrendered: function(canvas) {
         document.body.appendChild(canvas);
         window.oCanvas = document.getElementsByTagName("canvas");
