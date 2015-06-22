@@ -13,6 +13,7 @@ var $kicker = null;
 var $kickerInput = null;
 var $source = null;
 var $logoWrapper = null;
+var $updateTime = null;
 
 
 // Change straight quotes to curly and double hyphens to em-dashes.
@@ -97,6 +98,7 @@ $(function() {
     $kickerInput = $('#kicker');
     $quote = $('#quote');
     $logoWrapper = $('.logo-wrapper');
+    $updateTime = $('#update-time');
 
     adjustFontSize(32);
     processText();
@@ -146,6 +148,11 @@ $(function() {
     $timestampInput.on('keyup', function() {
         var inputText = $(this).val();
         $timestamp.text(inputText);
+    });
+
+    $updateTime.on('click', function(){
+        $timestamp.text(moment().format('h:mm a zz') + ' EST');
+        $timestampInput.val(moment().format('h:mm a zz') + ' EST');
     });
 
     $showInput.on('keyup', function() {
