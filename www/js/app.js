@@ -3,7 +3,6 @@ var $save = null;
 var $poster = null;
 var $themeButtons = null;
 var $aspectRatioButtons = null;
-var $quote = null;
 var $fontSize = null;
 var $showInput = null;
 var $showCredit = null;
@@ -15,9 +14,44 @@ var $source = null;
 var $logoWrapper = null;
 var $updateTime = null;
 
+/*
+ * Run on page load.
+ */
+var onDocumentLoad = function() {
+    $text = $('.poster blockquote p, .source');
+    $save = $('#save');
+    $poster = $('.poster');
+    $themeButtons = $('#theme .btn');
+    $aspectRatioButtons = $('#aspect-ratio .btn');
+    $fontSize = $('#fontsize');
+    $showInput = $('#show');
+    $showCredit = $('.show-credit');
+    $timestampInput = $('#timestamp');
+    $timestamp = $('.timestamp');
+    $kicker = $('.kicker');
+    $kickerInput = $('#kicker');
+    $logoWrapper = $('.logo-wrapper');
+    $updateTime = $('#update-time');
 
-// Change straight quotes to curly and double hyphens to em-dashes.
-function smarten(a) {
+    $save.on('click', saveImage);
+    $themeButtons.on('click', onThemeClick);
+    $aspectRatioButtons.on('click', onAspectRatioClick);
+    $fontSize.on('change', adjustFontSize);
+    $kickerInput.on('keyup', onKickerKeyup);
+    $timestampInput.on('keyup', onTimeStampKeyup);
+    $updateTime.on('click', updateTimestamp);
+    $showInput.on('keyup', onShowKeyup);
+
+    adjustFontSize(null, 32);
+    processText();
+    updateTimestamp();
+    setupMediumEditor();
+}
+
+/*
+ * Change straight quotes to curly and double hyphens to em-dashes.
+ */
+var smarten = function(a) {
   a = a.replace(/(^|[-\u2014\s(\["])'/g, "$1\u2018");       // opening singles
   a = a.replace(/'/g, "\u2019");                            // closing singles & apostrophes
   a = a.replace(/(^|[-\u2014/\[(\u2018\s])"/g, "$1\u201c"); // opening doubles
@@ -27,14 +61,20 @@ function smarten(a) {
   return a;
 }
 
-function convertToSlug(text) {
+/*
+ * Convert a string to slug format
+ */
+var convertToSlug = function(text) {
     return text
         .toLowerCase()
         .replace(/[^\w ]+/g,'')
         .replace(/ +/g,'-');
 }
 
-function processText() {
+/*
+ * Cleanup whitespace and smart quotes on text inputs
+ */
+var processText = function() {
     $text = $('.poster blockquote p, .source');
     $text.each(function() {
         var rawText = $.trim($(this).html());
@@ -42,7 +82,18 @@ function processText() {
     });
 }
 
-function saveImage() {
+/*
+ * Set the timestamp text to the current time
+ */
+var updateTimestamp = function() {
+    $timestamp.text(moment().format('MMMM D, YYYY h:mm A') + ' ET')
+    $timestampInput.val(moment().format('MMMM D, YYYY h:mm A') + ' ET')
+}
+
+/*
+ * Convert the poster HTML/CSS to canvas and export an image
+ */
+var saveImage = function() {
     // first check if the quote actually fits
     if (($timestamp.offset().top + $timestamp.height()) > $logoWrapper.offset().top) {
         alert("Your list doesn't fit. Shorten the text or choose a smaller font-size.");
@@ -75,99 +126,76 @@ function saveImage() {
     });
 }
 
-function adjustFontSize(size) {
-    var fontSize = size.toString() + 'px';
+/*
+ * Adjust the poster font size
+ */
+var adjustFontSize = function(e, size) {
+    var newSize = size||$(this).val();
+
+    var fontSize = newSize.toString() + 'px';
     $poster.css('font-size', fontSize);
-    if ($fontSize.val() !== size){
-        $fontSize.val(size);
+    if ($fontSize.val() !== newSize){
+        $fontSize.val(newSize);
     };
 }
 
-$(function() {
-    $text = $('.poster blockquote p, .source');
-    $save = $('#save');
-    $poster = $('.poster');
-    $themeButtons = $('#theme .btn');
-    $aspectRatioButtons = $('#aspect-ratio .btn');
-    $fontSize = $('#fontsize');
-    $showInput = $('#show');
-    $showCredit = $('.show-credit');
-    $timestampInput = $('#timestamp');
-    $timestamp = $('.timestamp');
-    $kicker = $('.kicker');
-    $kickerInput = $('#kicker');
-    $quote = $('#quote');
-    $logoWrapper = $('.logo-wrapper');
-    $updateTime = $('#update-time');
+/*
+ * Select a poster theme
+ */
+var onThemeClick = function(e) {
+    $themeButtons.removeClass().addClass('btn btn-primary');
+    $(this).addClass('active');
+    $poster.removeClass('poster-news poster-music poster-fresh-air poster-snap-judgement')
+                .addClass('poster-' + $(this).attr('id'));
+}
 
-    adjustFontSize(32);
-    processText();
+/*
+ * Select the poster aspect ratio
+ */
+var onAspectRatioClick = function(e) {
+    $aspectRatioButtons.removeClass().addClass('btn btn-primary');
+    $(this).addClass('active');
+    $poster.removeClass('square sixteen-by-nine').addClass($(this).attr('id'));
 
-    $timestamp.text(moment().format('MMMM D, YYYY h:mm A') + ' ET')
-    $timestampInput.val(moment().format('MMMM D, YYYY h:mm A') + ' ET')
+    if ($poster.hasClass('sixteen-by-nine')) {
+        $fontSize.attr('min', 24);
+        $fontSize.val(24);
+        adjustFontSize(null, 32);
+    } else {
+        $fontSize.attr('min', 32);
+        $fontSize.val(42);
+        adjustFontSize(null, 42);
+    }
+}
 
-    $save.on('click', saveImage);
+/*
+ * Update the kicker text
+ */
+var onKickerKeyup = function(e) {
+    var inputText = $(this).val();
+    $kicker.text(inputText);
+}
 
-    $themeButtons.on('click', function() {
-        $themeButtons.removeClass().addClass('btn btn-primary');
-        $(this).addClass('active');
-        $poster.removeClass('poster-news poster-music poster-fresh-air poster-snap-judgement')
-                    .addClass('poster-' + $(this).attr('id'));
-    });
+/*
+ * Update the timestamp
+ */
+var onTimeStampKeyup = function(e) {
+    var inputText = $(this).val();
+    $timestamp.text(inputText);
+}
 
-    $aspectRatioButtons.on('click', function() {
-        $aspectRatioButtons.removeClass().addClass('btn btn-primary');
-        $(this).addClass('active');
-        $poster.removeClass('square sixteen-by-nine').addClass($(this).attr('id'));
+/*
+ * Update the show attribution text
+ */
+var onShowKeyup = function(e) {
+    var inputText = $(this).val();
+    $showCredit.text(inputText);
+}
 
-        if ($poster.hasClass('sixteen-by-nine')) {
-            $fontSize.attr('min', 24);
-            $fontSize.val(24);
-            adjustFontSize(32);
-        } else {
-            $fontSize.attr('min', 32);
-            $fontSize.val(42);
-            adjustFontSize(42);
-        }
-    });
-
-    $quote.on('click', function() {
-        $(this).find('button').toggleClass('btn-primary active');
-        $poster.toggleClass('quote');
-    });
-
-    $fontSize.on('change', function() {
-        adjustFontSize($(this).val());
-    });
-
-    $kickerInput.on('keyup', function() {
-        var inputText = $(this).val();
-        $kicker.text(inputText);
-    });
-
-    $timestampInput.on('keyup', function() {
-        var inputText = $(this).val();
-        $timestamp.text(inputText);
-    });
-
-    $updateTime.on('click', function(){
-        $timestamp.text(moment().format('h:mm a zz') + ' EST');
-        $timestampInput.val(moment().format('h:mm a zz') + ' EST');
-    });
-
-    $showInput.on('keyup', function() {
-        var inputText = $(this).val();
-        $showCredit.text(inputText);
-    });
-
-    // // This event is interfering with the medium editor in some browsers
-    // $('blockquote').on('keyup', function(){
-
-    //     console.log($(this)[0].selectionStart);
-    //     process_text();
-    // });
-
-
+/*
+ * Bind a medium editor to the poster blockquote
+ */
+var setupMediumEditor = function(){
     var quoteEl = document.querySelectorAll('.poster blockquote');
 
     var quoteEditor = new MediumEditor(quoteEl, {
@@ -176,4 +204,6 @@ $(function() {
     });
 
     $('.poster blockquote').focus();
-});
+}
+
+$(onDocumentLoad);
