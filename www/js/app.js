@@ -172,6 +172,8 @@ $(function() {
 
     var quoteEditor = new MediumEditor(quoteEl, {
         disableToolbar: true,
-        placeholder: 'Type your quote here'
+        placeholder: ''
     });
+
+    $('.poster blockquote').focus();
 });
