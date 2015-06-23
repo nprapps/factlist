@@ -103,8 +103,8 @@ $(function() {
     adjustFontSize(32);
     processText();
 
-    $timestamp.text(moment().format('h:mm a zz') + ' EST')
-    $timestampInput.val(moment().format('h:mm a zz') + ' EST')
+    $timestamp.text(moment().format('MMMM D, YYYY h:mm A') + ' ET')
+    $timestampInput.val(moment().format('MMMM D, YYYY h:mm A') + ' ET')
 
     $save.on('click', saveImage);
 
