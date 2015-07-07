@@ -5,6 +5,7 @@ from flask import Markup, g, render_template, request
 from slimit import minify
 
 import app_config
+import copytext
 
 CSS_HEADER = '''
 /*
@@ -160,6 +161,7 @@ def make_context():
     """
     context = flatten_app_config()
 
+    context['COPY'] = copytext.Copy(app_config.COPY_PATH)
     context['JS'] = JavascriptIncluder()
     context['CSS'] = CSSIncluder()
 
