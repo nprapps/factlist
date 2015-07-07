@@ -96,8 +96,22 @@ var updateTimestamp = function() {
 var saveImage = function() {
     // first check if the quote actually fits
     if (($timestamp.offset().top + $timestamp.height()) > $logoWrapper.offset().top) {
-        alert("Your list doesn't fit. Shorten the text or choose a smaller font-size.");
-        return;
+        var tooTallMessage = "Your list is too long. Shorten the text or choose a smaller font-size.";
+    }
+
+    if ($kicker.width() > $poster.width()) {
+        var tooWideMessage = "Your headline is too wide. Shorten the headline.";
+    }
+
+    if (tooTallMessage || tooWideMessage) {
+          var alertMessage;
+          if (tooTallMessage && tooWideMessage) {
+              alertMessage = tooTallMessage + '\n' + tooWideMessage;
+          } else {
+              alertMessage = (tooTallMessage) ? tooTallMessage : tooWideMessage;
+          }
+          alert(alertMessage);
+          return;
     }
 
     $('canvas').remove();
