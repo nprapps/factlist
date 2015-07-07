@@ -5,8 +5,6 @@ var $poster = null;
 var $themeButtons = null;
 var $aspectRatioButtons = null;
 var $fontSize = null;
-var $showInput = null;
-var $showCredit = null;
 var $timestamp = null;
 var $timestampToggleButtons = null;
 var $kicker = null;
@@ -27,8 +25,6 @@ var onDocumentLoad = function() {
     $themeButtons = $('#theme .btn');
     $aspectRatioButtons = $('#aspect-ratio .btn');
     $fontSize = $('#fontsize');
-    $showInput = $('#show');
-    $showCredit = $('.show-credit');
     $timestamp = $('.timestamp');
     $timestampToggleButtons = $('#timestamp-toggle .btn');
     $kicker = $('.kicker');
@@ -42,7 +38,6 @@ var onDocumentLoad = function() {
     $timestampToggleButtons.on('click', onTimestampToggleClick);
     $fontSize.on('change', adjustFontSize);
     $kickerInput.on('keyup', onKickerKeyup);
-    $showInput.on('keyup', onShowKeyup);
 
     adjustFontSize(null, 32);
     processText();
@@ -203,14 +198,6 @@ var onTimestampToggleClick = function(e) {
 var onKickerKeyup = function(e) {
     var inputText = $(this).val();
     $kicker.text(inputText);
-}
-
-/*
- * Update the show attribution text
- */
-var onShowKeyup = function(e) {
-    var inputText = $(this).val();
-    $showCredit.text(inputText);
 }
 
 /*
