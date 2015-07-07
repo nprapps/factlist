@@ -13,6 +13,7 @@ var $kickerInput = null;
 var $source = null;
 var $logoWrapper = null;
 var $updateTime = null;
+var timestampInterval = null;
 
 /*
  * Run on page load.
@@ -38,13 +39,12 @@ var onDocumentLoad = function() {
     $aspectRatioButtons.on('click', onAspectRatioClick);
     $fontSize.on('change', adjustFontSize);
     $kickerInput.on('keyup', onKickerKeyup);
-    $timestampInput.on('keyup', onTimeStampKeyup);
-    $updateTime.on('click', updateTimestamp);
     $showInput.on('keyup', onShowKeyup);
 
     adjustFontSize(null, 32);
     processText();
     updateTimestamp();
+    timestampInterval = setInterval(updateTimestamp, 1000);
     setupMediumEditor();
 }
 
@@ -87,7 +87,6 @@ var processText = function() {
  */
 var updateTimestamp = function() {
     $timestamp.text(moment().format('MMMM D, YYYY h:mm A') + ' ET')
-    $timestampInput.val(moment().format('MMMM D, YYYY h:mm A') + ' ET')
 }
 
 /*
