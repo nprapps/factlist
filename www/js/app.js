@@ -1,4 +1,5 @@
 var $text = null;
+var $factList = null;
 var $save = null;
 var $poster = null;
 var $themeButtons = null;
@@ -7,7 +8,7 @@ var $fontSize = null;
 var $showInput = null;
 var $showCredit = null;
 var $timestamp = null;
-var $timestampInput = null;
+var $timestampToggleButtons = null;
 var $kicker = null;
 var $kickerInput = null;
 var $source = null;
@@ -20,6 +21,7 @@ var timestampInterval = null;
  */
 var onDocumentLoad = function() {
     $text = $('.poster blockquote p, .source');
+    $factList = $('.poster blockquote');
     $save = $('#save');
     $poster = $('.poster');
     $themeButtons = $('#theme .btn');
@@ -27,8 +29,8 @@ var onDocumentLoad = function() {
     $fontSize = $('#fontsize');
     $showInput = $('#show');
     $showCredit = $('.show-credit');
-    $timestampInput = $('#timestamp');
     $timestamp = $('.timestamp');
+    $timestampToggleButtons = $('#timestamp-toggle .btn');
     $kicker = $('.kicker');
     $kickerInput = $('#kicker');
     $logoWrapper = $('.logo-wrapper');
@@ -37,6 +39,7 @@ var onDocumentLoad = function() {
     $save.on('click', saveImage);
     $themeButtons.on('click', onThemeClick);
     $aspectRatioButtons.on('click', onAspectRatioClick);
+    $timestampToggleButtons.on('click', onTimestampToggleClick);
     $fontSize.on('change', adjustFontSize);
     $kickerInput.on('keyup', onKickerKeyup);
     $showInput.on('keyup', onShowKeyup);
@@ -94,7 +97,7 @@ var updateTimestamp = function() {
  */
 var saveImage = function() {
     // first check if the quote actually fits
-    if (($timestamp.offset().top + $timestamp.height()) > $logoWrapper.offset().top) {
+    if (($factList.offset().top + $factList.height()) > $logoWrapper.offset().top) {
         var tooTallMessage = "Your list is too long. Shorten the text or choose a smaller font-size.";
     }
 
@@ -182,19 +185,24 @@ var onAspectRatioClick = function(e) {
 }
 
 /*
+ * Select the poster aspect ratio
+ */
+var onTimestampToggleClick = function(e) {
+    $timestampToggleButtons.removeClass().addClass('btn btn-primary');
+    $(this).addClass('active');
+    if ($(this).attr('id') === 'show-timestamp') {
+        $timestamp.show();
+    } else {
+        $timestamp.hide();
+    }
+}
+
+/*
  * Update the kicker text
  */
 var onKickerKeyup = function(e) {
     var inputText = $(this).val();
     $kicker.text(inputText);
-}
-
-/*
- * Update the timestamp
- */
-var onTimeStampKeyup = function(e) {
-    var inputText = $(this).val();
-    $timestamp.text(inputText);
 }
 
 /*
@@ -216,7 +224,7 @@ var setupMediumEditor = function(){
         placeholder: ''
     });
 
-    $('.poster blockquote').focus();
+    $factList.focus();
 }
 
 $(onDocumentLoad);
