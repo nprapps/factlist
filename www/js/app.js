@@ -84,7 +84,10 @@ var processText = function() {
  * Set the timestamp text to the current time
  */
 var updateTimestamp = function() {
-    $timestamp.text(moment().format('MMMM D, YYYY h:mm A') + ' ET')
+    var latestTime = moment().format('MMMM D, YYYY h:mm A') + ' ET';
+    if (latestTime != $timestamp.text()) {
+       $timestamp.text(latestTime);
+    }
 }
 
 /*
